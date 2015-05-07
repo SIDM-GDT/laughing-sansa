@@ -2,25 +2,26 @@ import webapp2
 
 
 class DefaultHandler(webapp2.RequestHandler):
-    def respond(self, httpVerb):
-        self.response.write('HTTP verb is %s' % httpVerb)
+    def respond(self, httpVerb, URI=None):
+        self.response.write('HTTP verb is %s<br>' % httpVerb)
+        self.response.write('HTTP URI is %s<br>' % URI)
 
-    def get(self):        
-        self.respond('GET')
+    def get(self, URI):        
+        self.respond('GET', URI)
 
-    def post(self):        
-        self.respond('POST')
+    def post(self, URI):        
+        self.respond('POST', URI)
 
-    def put(self):        
-        self.respond('PUT')
+    def put(self, URI):        
+        self.respond('PUT', URI)
 
-    def delete(self):
-        self.respond('DELETE')
+    def delete(self, URI):
+        self.respond('DELETE', URI)
 
 
 
 routes = [
-    (r'/', DefaultHandler),
+    (r'/(.*)', DefaultHandler),
 ]
 
 config = {}
