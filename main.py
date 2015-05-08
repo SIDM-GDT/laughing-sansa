@@ -3,8 +3,15 @@ import webapp2
 
 class DefaultHandler(webapp2.RequestHandler):
     def respond(self, httpVerb, URI=None):
-        self.response.write('HTTP verb is %s<br>' % httpVerb)
-        self.response.write('HTTP URI is %s<br>' % URI)
+        self.response.write('HTTP verb is %s<br>\n' % httpVerb)
+        self.response.write('HTTP URI is %s<br><br>\n' % URI)
+
+        headers = self.request.headers
+        self.response.write('List of HTTP Headers<br>\n')
+        for k, v in headers.iteritems():
+            self.response.write('<b>%s</b> - %s <br>\n' % (k, v))
+
+        self.response.write('<br><b>Body of HTTP Request</b><br>\n%s'% self.request.body)
 
     def get(self, URI):        
         self.respond('GET', URI)
