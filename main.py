@@ -1,8 +1,15 @@
 import webapp2
 
+count = 0
 
 class DefaultHandler(webapp2.RequestHandler):
+    def __init__(self, request, response):
+        self.initialize(request, response)
+
     def respond(self, httpVerb, URI=None):
+        global count
+        count += 1
+        self.response.write('Count is %d<br>\n' % count)
         self.response.write('HTTP verb is %s<br>\n' % httpVerb)
         self.response.write('HTTP URI is %s<br><br>\n' % URI)
 
@@ -12,6 +19,8 @@ class DefaultHandler(webapp2.RequestHandler):
             self.response.write('<b>%s</b> - %s <br>\n' % (k, v))
 
         self.response.write('<br><b>Body of HTTP Request</b><br>\n%s'% self.request.body)
+        
+
 
     def get(self, URI):        
         self.respond('GET', URI)
