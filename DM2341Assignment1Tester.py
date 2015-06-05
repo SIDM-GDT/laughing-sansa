@@ -171,6 +171,8 @@ class UserNameTest(unittest.TestCase):
         r = requests.get(genUrl("user/%s" % userID))
         try:
             obj = r.json()
+            self.assertIn("Name", obj, "There should be a key \'Name\'")
+            return obj["Name"]
         except ValueError:
             self.assertTrue(False, "No JSON object could be decoded")
 
