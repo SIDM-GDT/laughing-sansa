@@ -198,6 +198,17 @@ class UserNameTest(unittest.TestCase):
         self.assertEqual(r.status_code, 400, "User name should not be the same")
         self.assertEqual(self.getUserName(), userName, "User name retrieved should be the same as the one set")
 
+    def testSetEmptyThenValidName(self):
+        userName = ""
+        r = requests.post(genUrl("user/name/%s" % self.userID), data=userName)
+        self.assertEqual(r.status_code, 400, "User name should not be the same")
+        self.assertEqual(self.getUserName(), userName, "User name retrieved should be the same as the one set")
+
+        userName = "wangchuck"
+        r = requests.post(genUrl("user/name/%s" % self.userID), data=userName)
+        self.assertEqual(r.status_code, 200, "Set user name should be successful")
+        self.assertEqual(self.getUserName(), userName, "User name retrieved should be the same as the one set")
+
     def testNameWithSpace(self):
         userName = "Mother of Dragons"
         r = requests.post(genUrl("user/name/%s" % self.userID), data=userName)
@@ -358,6 +369,31 @@ class GoldTest(unittest.TestCase):
 
         r = requests.get(genUrl("user/gold/%s" % self.userID))
         self.assertEqual(r.text, goldVal, "Gold value should be set")
+        self.assertEqual(r.status_code, 200, "Status code should be 200")
+
+    def testSetMoreOrLessGold(self):
+        goldVal1 = "300"
+        r = requests.put(genUrl("user/gold/%s" % self.userID), data=goldVal1)
+        self.assertEqual(r.status_code, 200, "Status code should be 200")
+
+        r = requests.get(genUrl("user/gold/%s" % self.userID))
+        self.assertEqual(r.text, goldVal1, "Gold value should be set")
+        self.assertEqual(r.status_code, 200, "Status code should be 200")
+
+        goldVal2 = "400"
+        r = requests.put(genUrl("user/gold/%s" % self.userID), data=goldVal2)
+        self.assertEqual(r.status_code, 200, "Status code should be 200")
+
+        r = requests.get(genUrl("user/gold/%s" % self.userID))
+        self.assertEqual(r.text, goldVal2, "Gold value should be set")
+        self.assertEqual(r.status_code, 200, "Status code should be 200")
+
+        goldVal3 = "100"
+        r = requests.put(genUrl("user/gold/%s" % self.userID), data=goldVal3)
+        self.assertEqual(r.status_code, 200, "Status code should be 200")
+
+        r = requests.get(genUrl("user/gold/%s" % self.userID))
+        self.assertEqual(r.text, goldVal3, "Gold value should be set")
         self.assertEqual(r.status_code, 200, "Status code should be 200")
 
     def testGetDefaultGold(self):
