@@ -496,14 +496,14 @@ class LevelTest(unittest.TestCase):
         self.assertEqual(r.text, levelVal, "Level should be set")
         self.assertEqual(r.status_code, 200, "Status code should be 200")
 
-        """Set lower Level"""
+        """Set higher Level"""
         XPVal = "400"
         r = requests.put(genUrl("user/XP/%s" % self.userID), data=XPVal)
-        self.assertEqual(r.status_code, 400, "Status code should be 400, level set should not be lower")
+        self.assertEqual(r.status_code, 200, "Status code should be 200")
 
         levelVal = "5"
         r = requests.get(genUrl("user/level/%s" % self.userID))
-        self.assertEqual(r.text, levelVal, "Level should be set")
+        self.assertEqual(r.text, levelVal, "Level should be set correctly")
         self.assertEqual(r.status_code, 200, "Status code should be 200")
 
 
