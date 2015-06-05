@@ -68,8 +68,8 @@ class UserTest(unittest.TestCase):
         """Test Existing ID"""
         r = requests.get(genUrl("user/create/"))
         userID = r.text
-        r = requests.get(genUrl("user/XP/%s" % userID))
-        self.assertEqual(len(r.text), 5, "User ID should be length 5")
+        r = requests.get(genUrl("user/%s" % userID))
+        self.assertEqual(r.status_code, 200, "There should be a user created")
 
     def testDeleteUser(self):
         r = requests.get(genUrl("user/create/"))
@@ -171,7 +171,6 @@ class UserNameTest(unittest.TestCase):
         r = requests.get(genUrl("user/%s" % userID))
         try:
             obj = r.json()
-            return obj.Name
         except ValueError:
             self.assertTrue(False, "No JSON object could be decoded")
 
