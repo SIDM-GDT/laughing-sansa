@@ -55,7 +55,7 @@ class UserTest(unittest.TestCase):
     # preparing to test
     def setUp(self):
         """ Setting up for the test """
-        requests.delete(genUrl("user"))
+        requests.delete(genUrl("user/"))
         
      
     # ending the test
@@ -143,7 +143,7 @@ class UserTest(unittest.TestCase):
         userID1 = r.text
         r = requests.get(genUrl("user/create/"))
         userID2 = r.text
-        r = requests.delete(genUrl("user"))
+        r = requests.delete(genUrl("user/"))
         self.assertEqual(r.status_code, 200, "Status code of delete all users should be 200")
         r = requests.get(genUrl("user/%s" % userID1))
         self.assertEqual(r.status_code, 404)
@@ -157,7 +157,7 @@ class UserNameTest(unittest.TestCase):
     # preparing to test
     def setUp(self):
         """ Setting up for the test """
-        requests.delete(genUrl("user"))
+        requests.delete(genUrl("user/"))
         r = requests.get(genUrl("user/create/"))
         self.userID = r.text
      
@@ -239,7 +239,7 @@ class XPTest(unittest.TestCase):
     # preparing to test
     def setUp(self):
         """ Setting up for the test """
-        requests.delete(genUrl("user"))
+        requests.delete(genUrl("user/"))
         r = requests.get(genUrl("user/create/"))
         self.userID = r.text
      
@@ -337,7 +337,7 @@ class GoldTest(unittest.TestCase):
     # preparing to test
     def setUp(self):
         """ Setting up for the test """
-        requests.delete(genUrl("user"))
+        requests.delete(genUrl("user/"))
         r = requests.get(genUrl("user/create/"))
         self.userID = r.text
         
@@ -425,7 +425,7 @@ class LevelTest(unittest.TestCase):
     # preparing to test
     def setUp(self):
         """ Setting up for the test """
-        requests.delete(genUrl("user"))
+        requests.delete(genUrl("user/"))
         r = requests.get(genUrl("user/create/"))
         self.userID = r.text    
      
