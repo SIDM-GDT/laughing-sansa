@@ -95,10 +95,14 @@ class UserTest(unittest.TestCase):
         r = requests.get(genUrl("user/%s" % userID))
         try:
             obj = r.json()
-            self.assertEqual(obj.Name, "")
-            self.assertEqual(obj.XP, 0)
-            self.assertEqual(obj.Level, 1)
-            self.assertEqual(obj.Gold, 0) 
+            self.assertIn("Name", obj)
+            self.assertIn("XP", obj)
+            self.assertIn("Level", obj)
+            self.assertIn("Gold", obj)
+            self.assertEqual(obj["Name"], "")
+            self.assertEqual(obj["XP"], 0)
+            self.assertEqual(obj["Level"], 1)
+            self.assertEqual(obj["Gold"], 0) 
         except ValueError:
             self.assertTrue(False, "No JSON object could be decoded")
         
@@ -111,10 +115,14 @@ class UserTest(unittest.TestCase):
         r = requests.get(genUrl("user/%s" % userID))
         try:
             obj = r.json()
-            self.assertEqual(obj.Name, "")
-            self.assertEqual(obj.XP, 100)
-            self.assertEqual(obj.Level, 2)
-            self.assertEqual(obj.Gold, 100) 
+            self.assertIn("Name", obj)
+            self.assertIn("XP", obj)
+            self.assertIn("Level", obj)
+            self.assertIn("Gold", obj)
+            self.assertEqual(obj["Name"], "")
+            self.assertEqual(obj["XP"], 100)
+            self.assertEqual(obj["Level"], 2)
+            self.assertEqual(obj["Gold"], 100) 
         except ValueError:
             self.assertTrue(False, "No JSON object could be decoded")
 
@@ -130,10 +138,16 @@ class UserTest(unittest.TestCase):
         r = requests.get(genUrl("user/%s" % userID2))
         try:
             obj = r.json()
-            self.assertEqual(obj.Name, "")
-            self.assertEqual(obj.XP, 0)
-            self.assertEqual(obj.Level, 1)
-            self.assertEqual(obj.Gold, 0) 
+
+            self.assertIn("Name", obj)
+            self.assertIn("XP", obj)
+            self.assertIn("Level", obj)
+            self.assertIn("Gold", obj)
+            self.assertEqual(obj["Name"], "")
+            self.assertEqual(obj["XP"], 0)
+            self.assertEqual(obj["Level"], 1)
+            self.assertEqual(obj["Gold"], 0) 
+
         except ValueError:
             self.assertTrue(False, "No JSON object could be decoded")
 
