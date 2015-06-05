@@ -282,7 +282,7 @@ class XPTest(unittest.TestCase):
         self.assertEqual(r.status_code, 200, "Status code should be 200")
 
         highXPVal = "400"
-        r = requests.put(genUrl("user/XP/%s" % self.userID), data=lowXPVal)
+        r = requests.put(genUrl("user/XP/%s" % self.userID), data=highXPVal)
         self.assertEqual(r.status_code, 200, "Status code should be 400, XP won't go lower")
 
         r = requests.get(genUrl("user/XP/%s" % self.userID))
