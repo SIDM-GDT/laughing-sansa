@@ -521,26 +521,57 @@ class LevelTest(unittest.TestCase):
         self.assertEqual(r.text, levelVal, "Level should be set correctly")
         self.assertEqual(r.status_code, 200, "Status code should be 200")
 
+def runTestsFromFile(filename):
+    submission = []
+    with open(filename, 'r') as f:
+        submission = f.readlines()
+    submission = [line.strip().split(",") for line in submission]
+
+    for student in submission:
+        host = student[1]
+        if student[0][0] == '#':
+            print "Skipping %s" % (student[0])
+            continue
+            
+        print "Testing %s %s" %(student[0], student[1])
+        with open("Result_%s.txt" % student[0], "w") as f:
+            assignment1Runner = unittest.TextTestRunner(stream=f, descriptions=False, verbosity=2)
+            testResult = assignment1Runner.run(assignment1Suite)
+            f.write(str(testResult)+"\n\n")
+            f.write("Tests Run = %d\n"%(testResult.testsRun))
+            if testResult.errors:
+                f.write("Errors\n")
+                for error in testResult.errors: 
+                    f.write("%s\n%s\n"%(error[0].id, error[1]))
+            if testResult.failures:
+                f.write("Failures\n")
+                for failure in testResult.failures: 
+                    f.write("%s\n%s\n"%(failure[0].id, failure[1]))
+            passedTests = testResult.testsRun - len(testResult.failures) - len(testResult.errors)
+            f.write("Total Tests = %d, Passed Test = %d, Failed Test = %d, Errors = %d"%(testResult.testsRun, passedTests, len(testResult.failures), len(testResult.errors)))
+
 
 if __name__ == "__main__":
-    unittest.main()
 
     # creating a new test suite
     assignment1Suite = unittest.TestSuite()
  
     # adding a test case
     
-    assignment1Suite.addTest(unittest.makeSuite(GetUserTest))
-    assignment1Suite.addTest(unittest.makeSuite(NameTest))
-    assignment1Suite.addTest(unittest.makeSuite(GetNameTest))
+    assignment1Suite.addTest(unittest.makeSuite(CreateUserIDTest))
+    assignment1Suite.addTest(unittest.makeSuite(UserTest))
+    assignment1Suite.addTest(unittest.makeSuite(UserNameTest))
     assignment1Suite.addTest(unittest.makeSuite(XPTest))
     assignment1Suite.addTest(unittest.makeSuite(GoldTest))
     assignment1Suite.addTest(unittest.makeSuite(LevelTest))
     
 
-    #assignment1Runner = unittest.TextTestRunner(description=False)
-    assignment1Runner = unittest.TextTestRunner()
-    testResult = assignment1Runner.run(assignment1Suite)
-
-
-
+    
+    #assignment1Runner = unittest.TextTestRunner()
+    #unittest.main()
+    nameList = "submission.csv"
+    import os.path
+    if os.path.isfile(nameList):
+        runTestsFromFile(nameList)
+    else:
+        unittest.main()
